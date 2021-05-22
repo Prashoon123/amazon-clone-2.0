@@ -2,11 +2,29 @@ import { forwardRef, useState } from "react";
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/solid";
 import Currency from "react-currency-formatter";
+import { useDispatch } from "react-redux";
+import { addToBasket } from "../slices/basketSlice";
 
 const Product = forwardRef(
   ({ id, title, price, description, category, image }, ref) => {
     const [rating] = useState(Math.floor(Math.random() * 5 - 1 + 1));
     const [hasPrime] = useState(Math.random() < 0.5);
+    const dispatch = useDispatch();
+
+    const addItemToBasket = () => {
+      const product = {
+        id,
+        title,
+        price,
+        description,
+        category,
+        image,
+        hasPrime,
+        rating,
+      };
+
+      dispatch(addToBasket(product));
+    };
 
     return (
       <div ref={ref} className="relative flex flex-col m-5 bg-white z-30 p-10">
@@ -22,7 +40,7 @@ const Product = forwardRef(
           {Array(rating)
             .fill()
             .map((_, i) => (
-              <StarIcon className="h-5 text-yellow-500" />
+              <StarIcon key={i} className="h-5 text-yellow-500" />
             ))}
         </div>
 
@@ -34,12 +52,18 @@ const Product = forwardRef(
 
         {hasPrime && (
           <div className="flex items-center space-x-2 -mt-5">
-            <img className="w-12" src="https://links.papareact.com/fdw" alt="" />
+            <img
+              className="w-12"
+              src="https://links.papareact.com/fdw"
+              alt=""
+            />
             <p className="text-xs text-gray-500">FREE Next-day Delivery</p>
           </div>
         )}
 
-        <button className="mt-auto button">Add to Basket</button>
+        <button onClick={addItemToBasket} className="mt-auto button">
+          Add to Basket
+        </button>
       </div>
     );
   }

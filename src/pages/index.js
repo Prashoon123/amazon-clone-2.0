@@ -1,9 +1,19 @@
+import Cookie from "js-cookie";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Banner from "../components/Banner";
 import Header from "../components/Header";
 import ProductFeed from "../components/ProductFeed";
+import { selectItems } from "../slices/basketSlice";
 
 export default function Home({ products }) {
+  const items = useSelector(selectItems);
+
+  useEffect(() => {
+    Cookie.set("cart", items);
+  }, [items]);
+
   return (
     <div className="bg-gray-100">
       <Head>

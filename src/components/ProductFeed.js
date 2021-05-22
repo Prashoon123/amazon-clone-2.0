@@ -63,7 +63,7 @@ function ProductFeed({ products }) {
       </div>
 
       {dummyProducts
-        .slice(5, products.length)
+        .slice(5, products.length - 1)
         .map(({ id, title, price, description, category, image }) => (
           <Product
             category={category}
@@ -75,6 +75,22 @@ function ProductFeed({ products }) {
             price={price}
           />
         ))}
+
+      <div className="md:col-span-4">
+        {dummyProducts
+          .slice(19, products.length)
+          .map(({ id, title, price, description, category, image }) => (
+            <Product
+              category={category}
+              image={image}
+              title={title}
+              description={description}
+              key={id}
+              id={id}
+              price={price}
+            />
+          ))}
+      </div>
     </FlipMove>
   );
 }
