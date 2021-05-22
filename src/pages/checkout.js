@@ -69,7 +69,7 @@ function Checkout() {
                 onClick={!session ? signIn : console.log("")}
                 className={`button mt-2 ${
                   !session &&
-                  "from-gray-300 to-gray-500 border-gray-200 text-black"
+                  "from-gray-300 to-gray-500 border-gray-200 text-black active:from-gray-500"
                 }`}
               >
                 {!session ? "Sign in to checkout" : "Proceed to checkout"}
