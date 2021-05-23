@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import ProductInfo from "../../components/ProductInfo";
-import Header from "../../components/Header";
 
 function ProductDetail({ products }) {
   const router = useRouter();
@@ -21,14 +20,12 @@ function ProductDetail({ products }) {
   }, [id]);
 
   return (
-    <div className="bg-gray-300 h-screen">
+    <div className="bg-gray-300">
       <Head>
         <title>Product Details</title>
       </Head>
 
-      <Header />
-
-      <main className="flex max-w-screen-2xl mx-auto content-center">
+      <main className="flex max-w-screen-2xl mx-auto h-screen content-center">
         <ProductInfo
           key={productInfo[0]?.id}
           id={productInfo[0]?.id}
