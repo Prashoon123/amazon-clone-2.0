@@ -5,6 +5,10 @@ import Currency from "react-currency-formatter";
 import { useDispatch } from "react-redux";
 import { addToBasket } from "../slices/basketSlice";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 const Product = forwardRef(
   ({ id, title, price, description, category, image, i }, ref) => {
@@ -14,6 +18,15 @@ const Product = forwardRef(
     const dispatch = useDispatch();
 
     const addItemToBasket = () => {
+      toast.success("Added item to cart!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+      });
+
       const product = {
         id,
         title,
@@ -25,7 +38,7 @@ const Product = forwardRef(
         rating,
       };
 
-      dispatch(addToBasket(product));
+      setTimeout(() => dispatch(addToBasket(product)), 300);
     };
 
     return (
@@ -69,7 +82,7 @@ const Product = forwardRef(
         </div>
 
         <button onClick={addItemToBasket} className="mt-auto button">
-          Add to Basket
+          Add to Cart
         </button>
       </div>
     );

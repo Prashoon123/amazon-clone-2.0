@@ -3,6 +3,10 @@ import Image from "next/image";
 import Currency from "react-currency-formatter";
 import { useDispatch } from "react-redux";
 import { addToBasket, removeFromBasket } from "../slices/basketSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 
 function CheckoutProduct({
   id,
@@ -17,6 +21,15 @@ function CheckoutProduct({
   const dispatch = useDispatch();
 
   const addItemToBasket = () => {
+    toast.success("Added item to cart!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+
     const product = {
       id,
       title,
@@ -32,6 +45,15 @@ function CheckoutProduct({
   };
 
   const removeItemFromBasket = () => {
+    toast.error("Removed item from cart!", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+    });
+
     dispatch(removeFromBasket({ id }));
   };
 
