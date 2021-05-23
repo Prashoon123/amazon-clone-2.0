@@ -26,7 +26,7 @@ function ProductFeed({ products }) {
     >
       {dummyProducts
         .slice(0, 4)
-        .map(({ id, title, price, description, category, image }) => (
+        .map(({ id, title, price, description, category, image }, i) => (
           <Product
             category={category}
             image={image}
@@ -35,6 +35,7 @@ function ProductFeed({ products }) {
             key={id}
             id={id}
             price={price}
+            i={i}
           />
         ))}
 
@@ -49,7 +50,7 @@ function ProductFeed({ products }) {
       <div className="md:col-span-2">
         {dummyProducts
           .slice(4, 5)
-          .map(({ id, title, price, description, category, image }) => (
+          .map(({ id, title, price, description, category, image }, i) => (
             <Product
               category={category}
               image={image}
@@ -58,13 +59,14 @@ function ProductFeed({ products }) {
               key={id}
               id={id}
               price={price}
+              i={i + 4}
             />
           ))}
       </div>
 
       {dummyProducts
-        .slice(5, products.length - 1)
-        .map(({ id, title, price, description, category, image }) => (
+        .slice(5, products.length)
+        .map(({ id, title, price, description, category, image }, i) => (
           <Product
             category={category}
             image={image}
@@ -73,24 +75,9 @@ function ProductFeed({ products }) {
             key={id}
             id={id}
             price={price}
+            i={i + 5}
           />
         ))}
-
-      <div className="md:col-span-4">
-        {dummyProducts
-          .slice(19, products.length)
-          .map(({ id, title, price, description, category, image }) => (
-            <Product
-              category={category}
-              image={image}
-              title={title}
-              description={description}
-              key={id}
-              id={id}
-              price={price}
-            />
-          ))}
-      </div>
     </FlipMove>
   );
 }
