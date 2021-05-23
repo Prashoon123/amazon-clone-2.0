@@ -23,7 +23,7 @@ function ProductDetail({ products }) {
   return (
     <div className="bg-gray-300 h-screen">
       <Head>
-        <title>Product Details</title>
+        <title>Product Detail</title>
       </Head>
 
       <Header />
