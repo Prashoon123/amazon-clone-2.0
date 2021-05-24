@@ -69,7 +69,7 @@ const Product = forwardRef(
         </div>
 
         <button onClick={addItemToBasket} className="mt-auto button">
-          Add to Basket
+          Add to Cart
         </button>
       </div>
     );
