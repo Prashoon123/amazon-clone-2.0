@@ -21,5 +21,5 @@ export default NextAuth({
       clientSecret: process.env.TWITTER_SECRET,
     }),
   ],
-  theme: "dark",
+  theme: "auto",
 });
