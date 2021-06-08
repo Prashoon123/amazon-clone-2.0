@@ -11,8 +11,6 @@ import axios from "axios";
 
 const stripePromise = loadStripe(process.env.stripe_public_key);
 
-console.log(process.env.stripe_public_key)
-
 function Checkout() {
   const [session] = useSession();
   const items = useSelector(selectItems);
