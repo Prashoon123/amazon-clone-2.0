@@ -37,7 +37,6 @@ function Header() {
             height={40}
             objectFit="contain"
             className="cursor-pointer"
-            loading="lazy"
             onClick={() => router.push("/")}
           />
         </div>
