@@ -1,55 +1,26 @@
 import Product from "./Product";
-import FlipMove from "react-flip-move";
-import { useEffect, useState } from "react";
+import Fuse from "fuse.js";
+import { useSelector } from "react-redux";
+import { searchString } from "../slices/searchSlice";
 
 function ProductFeed({ products }) {
-  const [dummyProducts, setDummyProducts] = useState([]);
-  const [showImage, setShowImage] = useState(null);
+  const string = useSelector(searchString);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setDummyProducts(products);
-      setShowImage(true);
-    }, 500);
-  }, []);
+  const fuse = new Fuse(products, {
+    keys: ["title"],
+    includeScore: true,
+  });
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowImage(true);
-    }, 600);
-  }, []);
+  const results = fuse.search(!string ? " " : string);
 
-  return (
-    <FlipMove
-      leaveAnimation="none"
-      className="grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:-mt-52 mx-auto"
-    >
-      {dummyProducts
-        .slice(0, 4)
-        .map(({ id, title, price, description, category, image }, i) => (
-          <Product
-            category={category}
-            image={image}
-            title={title}
-            description={description}
-            key={id}
-            id={id}
-            price={price}
-            i={i}
-          />
-        ))}
-
-      {showImage && (
-        <img
-          src="https://links.papareact.com/dyz"
-          className="md:col-span-full"
-          alt=""
-        />
-      )}
-
-      <div className="md:col-span-2">
-        {dummyProducts
-          .slice(4, 5)
+  if (!string || !results) {
+    return (
+      <div
+        leaveAnimation="none"
+        className="grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:-mt-52 mx-auto"
+      >
+        {products
+          .slice(0, 4)
           .map(({ id, title, price, description, category, image }, i) => (
             <Product
               category={category}
@@ -59,27 +30,115 @@ function ProductFeed({ products }) {
               key={id}
               id={id}
               price={price}
-              i={i + 4}
+              i={i}
+            />
+          ))}
+
+        <img
+          src="https://links.papareact.com/dyz"
+          className="md:col-span-full"
+          alt=""
+        />
+
+        <div className="md:col-span-2">
+          {products
+            .slice(4, 5)
+            .map(({ id, title, price, description, category, image }, i) => (
+              <Product
+                category={category}
+                image={image}
+                title={title}
+                description={description}
+                key={id}
+                id={id}
+                price={price}
+                i={i + 4}
+              />
+            ))}
+        </div>
+
+        {products
+          .slice(5, products.length)
+          .map(({ id, title, price, description, category, image }, i) => (
+            <Product
+              category={category}
+              image={image}
+              title={title}
+              description={description}
+              key={id}
+              id={id}
+              price={price}
+              i={i + 5}
             />
           ))}
       </div>
-
-      {dummyProducts
-        .slice(5, products.length)
-        .map(({ id, title, price, description, category, image }, i) => (
-          <Product
-            category={category}
-            image={image}
-            title={title}
-            description={description}
-            key={id}
-            id={id}
-            price={price}
-            i={i + 5}
-          />
+    );
+  } else {
+    return (
+      <div className="grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:-mt-52 mx-auto">
+        {results.slice(0, 4).map(({ item, score }, i) => (
+          <>
+            <Product
+              category={item.category}
+              image={item.image}
+              title={item.title}
+              description={item.description}
+              key={item.id}
+              id={item.id}
+              price={item.price}
+              i={i + 5}
+            />
+          </>
         ))}
-    </FlipMove>
-  );
+
+        <img
+          src="https://links.papareact.com/dyz"
+          className="md:col-span-full"
+          alt=""
+        />
+
+        <div className="md:col-span-2">
+          {results.length > 4 && (
+            <>
+              {results.slice(4, 5).map(({ item, score }, i) => (
+                <>
+                  <Product
+                    category={item.category}
+                    image={item.image}
+                    title={item.title}
+                    description={item.description}
+                    key={item.id}
+                    id={item.id}
+                    price={item.price}
+                    i={i + 5}
+                  />
+                </>
+              ))}
+            </>
+          )}
+        </div>
+
+        {results.length > 5 && (
+          <>
+            {results.slice(5, products.length).map(({ item, score }, i) => (
+              <>
+                <Product
+                  category={item.category}
+                  image={item.image}
+                  title={item.title}
+                  description={item.description}
+                  key={item.id}
+                  id={item.id}
+                  price={item.price}
+                  i={i + 5}
+                />
+              </>
+            ))}
+          </>
+        )}
+      </div>
+    );
+  }
 }
 
 export default ProductFeed;

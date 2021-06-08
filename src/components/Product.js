@@ -6,12 +6,17 @@ import { useDispatch } from "react-redux";
 import { addToBasket } from "../slices/basketSlice";
 import { useRouter } from "next/router";
 
+const MAX_RATING = 5;
+const MIN_RATING = 1;
+
 const Product = forwardRef(
   ({ id, title, price, description, category, image, i }, ref) => {
-    const router = useRouter();
-    const [rating] = useState(Math.floor(Math.random() * 5));
+    const [rating] = useState(
+      Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
+    );
     const [hasPrime] = useState(Math.random() < 0.5);
     const dispatch = useDispatch();
+    const router = useRouter();
 
     const addItemToBasket = () => {
       const product = {
@@ -31,8 +36,8 @@ const Product = forwardRef(
     return (
       <div ref={ref} className="relative flex flex-col m-5 bg-white z-30 p-10">
         <div
-          onClick={() => router.push(`/product/${i}`)}
           className="cursor-pointer"
+          onClick={() => router.push(`/product/${id}`)}
         >
           <p className="absolute top-2 right-2 text-xs italic text-gray-400">
             {category}

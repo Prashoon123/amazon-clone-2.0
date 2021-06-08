@@ -19,11 +19,11 @@ function Banner() {
         </div>
 
         <div>
-          <img src="https://links.papareact.com/6ff" loading="eager" />
+          <img src="https://links.papareact.com/6ff" />
         </div>
 
         <div>
-          <img src="https://links.papareact.com/7ma" loading="eager" />
+          <img src="https://links.papareact.com/7ma" />
         </div>
       </Carousel>
     </div>

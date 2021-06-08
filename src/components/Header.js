@@ -6,13 +6,26 @@ import {
 } from "@heroicons/react/outline";
 import { signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectItems } from "../slices/basketSlice";
+import { useState } from "react";
+import { updateString } from "../slices/searchSlice";
 
 function Header() {
+  const dispatch = useDispatch();
   const [session] = useSession();
   const router = useRouter();
   const items = useSelector(selectItems);
+  const [input, setInput] = useState("");
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+    dispatch(updateString(e.target.value));
+  };
+
+  const search = () => {
+    dispatch(updateString(input));
+  };
 
   return (
     <nav className="sticky top-0 z-50">
@@ -33,8 +46,10 @@ function Header() {
           <input
             className="outline-none p-2 h-full w-6 flex-grow flex-shrink rounded-l-md px-4"
             type="text"
+            value={input}
+            onChange={(e) => handleInputChange(e)}
           />
-          <SearchIcon className="h-12 p-4" />
+          <SearchIcon onClick={search} className="h-12 p-4" />
         </div>
 
         <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
