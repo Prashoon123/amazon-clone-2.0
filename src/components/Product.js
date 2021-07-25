@@ -6,15 +6,11 @@ import { useDispatch } from "react-redux";
 import { addToBasket } from "../slices/basketSlice";
 import { useRouter } from "next/router";
 
-const MAX_RATING = 5;
-const MIN_RATING = 1;
-
 const Product = forwardRef(
-  ({ id, title, price, description, category, image, i }, ref) => {
-    const [rating] = useState(
-      Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
-    );
-    const [hasPrime] = useState(Math.random() < 0.5);
+  (
+    { id, title, price, description, category, image, i, rating, hasPrime },
+    ref
+  ) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -37,7 +33,11 @@ const Product = forwardRef(
       <div ref={ref} className="relative flex flex-col m-5 bg-white z-30 p-10">
         <div
           className="cursor-pointer"
-          onClick={() => router.push(`/product/${id}`)}
+          onClick={() =>
+            router.push(
+              `/product/id/${id}/rating/${rating}/hasPrime/${hasPrime}`
+            )
+          }
         >
           <p className="absolute top-2 right-2 text-xs italic text-gray-400">
             {category}
@@ -48,7 +48,7 @@ const Product = forwardRef(
           <h4 className="my-3">{title}</h4>
 
           <div className="flex">
-            {Array(rating || Math.floor(Math.random() * 4))
+            {Array(rating)
               .fill()
               .map((_, i) => (
                 <StarIcon key={i} className="h-5 text-yellow-500" />

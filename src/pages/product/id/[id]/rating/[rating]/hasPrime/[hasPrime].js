@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Header from "../../components/Header";
+import Header from "../../../../../../../components/Header";
 import { useEffect, useState } from "react";
-import ProductInfo from "../../components/ProductInfo";
+import ProductInfo from "../../../../../../../components/ProductInfo";
 
 function ProductDetail() {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, rating, hasPrime } = router.query;
   const [productInfo, setProductInfo] = useState(null);
 
   const product = async () =>
@@ -32,12 +32,12 @@ function ProductDetail() {
             key={productInfo?.id}
             id={productInfo?.id}
             title={productInfo?.title}
-            rating={productInfo?.rating}
+            rating={rating}
             price={productInfo?.price}
             description={productInfo?.description}
             category={productInfo?.category}
             image={productInfo?.image}
-            hasPrime={productInfo?.hasPrime}
+            hasPrime={hasPrime}
           />
         ) : (
           ""

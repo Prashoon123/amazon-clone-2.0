@@ -17,13 +17,15 @@ export default async (req, res) => {
   }));
 
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
+    customer_email: email,
+    payment_method_types: ["card", "alipay"],
     shipping_rates: ["shr_1IuCH6KLSZ12zByOzmNKKJ2D"],
     shipping_address_collection: {
       allowed_countries: ["GB", "US", "CA", "IN"],
     },
     line_items: transformedItems,
     mode: "payment",
+    allow_promotion_codes: true,
     success_url: `${process.env.HOST}/success`,
     cancel_url: `${process.env.HOST}/checkout`,
     metadata: {

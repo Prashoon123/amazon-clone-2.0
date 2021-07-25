@@ -21,18 +21,34 @@ function ProductFeed({ products }) {
       >
         {products
           .slice(0, 4)
-          .map(({ id, title, price, description, category, image }, i) => (
-            <Product
-              category={category}
-              image={image}
-              title={title}
-              description={description}
-              key={id}
-              id={id}
-              price={price}
-              i={i}
-            />
-          ))}
+          .map(
+            (
+              {
+                id,
+                title,
+                price,
+                description,
+                category,
+                image,
+                rating,
+                hasPrime,
+              },
+              i
+            ) => (
+              <Product
+                category={category}
+                image={image}
+                title={title}
+                description={description}
+                key={id}
+                id={id}
+                price={price}
+                i={i}
+                rating={rating}
+                hasPrime={hasPrime}
+              />
+            )
+          )}
 
         <img
           src="https://links.papareact.com/dyz"
@@ -43,7 +59,52 @@ function ProductFeed({ products }) {
         <div className="md:col-span-2">
           {products
             .slice(4, 5)
-            .map(({ id, title, price, description, category, image }, i) => (
+            .map(
+              (
+                {
+                  id,
+                  title,
+                  price,
+                  description,
+                  category,
+                  image,
+                  rating,
+                  hasPrime,
+                },
+                i
+              ) => (
+                <Product
+                  category={category}
+                  image={image}
+                  title={title}
+                  description={description}
+                  key={id}
+                  id={id}
+                  price={price}
+                  i={i + 4}
+                  rating={rating}
+                  hasPrime={hasPrime}
+                />
+              )
+            )}
+        </div>
+
+        {products
+          .slice(5, products.length)
+          .map(
+            (
+              {
+                id,
+                title,
+                price,
+                description,
+                category,
+                image,
+                rating,
+                hasPrime,
+              },
+              i
+            ) => (
               <Product
                 category={category}
                 image={image}
@@ -52,25 +113,12 @@ function ProductFeed({ products }) {
                 key={id}
                 id={id}
                 price={price}
-                i={i + 4}
+                i={i + 5}
+                rating={rating}
+                hasPrime={hasPrime}
               />
-            ))}
-        </div>
-
-        {products
-          .slice(5, products.length)
-          .map(({ id, title, price, description, category, image }, i) => (
-            <Product
-              category={category}
-              image={image}
-              title={title}
-              description={description}
-              key={id}
-              id={id}
-              price={price}
-              i={i + 5}
-            />
-          ))}
+            )
+          )}
       </div>
     );
   } else {
@@ -87,6 +135,8 @@ function ProductFeed({ products }) {
               id={item.id}
               price={item.price}
               i={i + 5}
+              rating={item.rating}
+              hasPrime={item.hasPrime}
             />
           </>
         ))}
@@ -111,6 +161,8 @@ function ProductFeed({ products }) {
                     id={item.id}
                     price={item.price}
                     i={i + 5}
+                    rating={item.rating}
+                    hasPrime={item.hasPrime}
                   />
                 </>
               ))}
@@ -131,6 +183,8 @@ function ProductFeed({ products }) {
                   id={item.id}
                   price={item.price}
                   i={i + 5}
+                  rating={item.rating}
+                  hasPrime={item.hasPrime}
                 />
               </>
             ))}
